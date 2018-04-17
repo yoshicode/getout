@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/index.css">
+  </head>
+  <body>
+    <div id="main">
+      <div class="container">
+        <div class="text-center">
+          <h1 class="f-25 m-t-10-p">暗闇迷宮へようこそ</h1>
+          <p><a href="main.html" class="p-t-30">入場する</a></p>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('sw.js', { scope: '.' }).then(function(registraion) {
+        registraion.update();
+      });
+    }
+    </script>
+  </body>
+</html>

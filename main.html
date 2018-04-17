@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/index.css">
+  </head>
+  <body>
+    <div id="main">
+      <div class="container">
+
+        <div class="text-center">
+          <p class="split">
+            ようこそ暗黒迷宮へ... <br>
+            お主はこの暗黒の世界に迷い込んでしまったようだな。 <br>
+            <br>・・・・・・・<br>
+            <br>
+            これからお主はこの暗黒迷宮から脱出しなければならぬ。 <br>
+            さて、これからはキーボードの矢印を使って、進むが良い。 <br>
+            <br>
+            <a href="start.html" class="c-white">早速進む</a>
+          </p>
+        </div>
+
+
+
+      </div>
+
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/type-text.js"></script>
+    <script type="text/javascript">
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('sw.js', { scope: '.' }).then(function(registraion) {
+        registraion.update();
+      });
+    }
+    </script>
+  </body>
+</html>
