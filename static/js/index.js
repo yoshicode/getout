@@ -22,7 +22,9 @@
     GOAL_Y = util.rand(10),
     ZOMBIES = [[util.rand(10), util.rand(10)],
               [util.rand(10), util.rand(10)],
-              [util.rand(10), util.rand(10)]]
+              [util.rand(10), util.rand(10)],
+              [util.rand(10), util.rand(10)],
+              [util.rand(10), util.rand(10)],]
   }
 
   var module = {
@@ -52,11 +54,20 @@
     }
   }
 
-  module.changeStatus = function (x, y) {
+  module.changeStatus = function (x, y, t) {
     module.status.x += x;
     module.status.y += y;
     module.progress += 1;
+
+    if (module.status.x < 1 || module.status.y < 1) {
+        util.insertText('壁にぶつかりました');
+        module.status.x -= x;
+        module.status.y -= y;
+        return;
+    }
+
     this.checkEvent();
+    util.insertText(t);
   }
 
   module.checkEvent = function () {
@@ -69,6 +80,8 @@
     // If progress reachs 10, it ends.
     if (module.progress >= 10) {
       alert('あなたの負けだ・・・');
+      window.location.href = ""
+      return;
     }
   }
 
@@ -79,7 +92,7 @@
                           && this.status.y === zombies[i][1]);
       if (isMeetZombie) {
         alert('ゾンビに襲われました！！！！');
-        util.insertText('<img src="static/img/zombie.jpg">')
+        window.location.href = "zombie.html"
         return;
       }
     }
@@ -102,26 +115,22 @@
       if (e.keyCode == '38') {
           // up arrow
           console.log("up arrow");
-          module.changeStatus(1, 0);
-          util.insertText('前に進みました...');
+          module.changeStatus(1, 0, '前に進みました...');
       }
       else if (e.keyCode == '40') {
           // down arrow
           console.log("down arrow");
-          module.changeStatus(-1, 0);
-          util.insertText('戻りました...');
+          module.changeStatus(-1, 0, '戻りました...');
       }
       else if (e.keyCode == '37') {
          // left arrow
          console.log("left arrow");
-         module.changeStatus(0, -1);
-         util.insertText('左に曲がりました...');
+         module.changeStatus(0, -1, '左に曲がりました...');
       }
       else if (e.keyCode == '39') {
          // right arrow
          console.log("right arrow");
-         module.changeStatus(0, 1);
-         util.insertText('右に曲がりました...');
+         module.changeStatus(0, 1, '右に曲がりました...');
       }
   }
 
