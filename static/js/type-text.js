@@ -21,6 +21,7 @@ $(function(){
 		});
 		setTimeout(function(){
 				setElm.html(setText);
+				document.getElementById('nextBtn').style.visibility = "visible";
 		},splitLength*delaySpeed+fadeSpeed);
 	});
 });

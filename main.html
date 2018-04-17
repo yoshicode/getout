@@ -20,7 +20,7 @@
             これからお主はこの暗黒迷宮から脱出しなければならぬ。 <br>
             さて、これからはキーボードの矢印を使って、進むが良い。 <br>
             <br>
-            <a href="start.html" class="c-white">早速進む</a>
+            <a href="start.html" class="c-white square_btn" id="nextBtn" style="visibility: hidden;">早速進む</a>
           </p>
         </div>
 
@@ -37,6 +37,10 @@
         registraion.update();
       });
     }
+    var audio = new Audio('static/sounds/typewriter.mp3');
+    setTimeout(function () {
+      audio.play();
+    }, 2000)
     </script>
   </body>
 </html>
