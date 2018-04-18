@@ -4,6 +4,8 @@
 
   // Util function
   var $s = document.getElementById('status');
+  var $hp = document.getElementById('hp');
+
   var util = {
     rand: function(n){
         return Math.floor(Math.random() * n) + 1;
@@ -16,6 +18,7 @@
   // Set default values
   {
     var PROGRESS = 0,
+    MAX_PROGRESS = 12,
     POSITION_X = util.rand(10),
     POSITION_Y = util.rand(10),
     GOAL_X = util.rand(10),
@@ -46,11 +49,15 @@
       console.log("ZOMBIES: ", module.zombies);
 
       var isStatusAndGoalSame = (module.status.x === module.goal.x
-                                  && module.status.y === module.goal.y)
+                                && module.status.y === module.goal.y)
       if (isStatusAndGoalSame) {
         alert("今の位置とゴールが同じなので、もう一度読み込みます。")
         location.reload();
       }
+
+      // Init hit point
+      this.showHP();
+
     }
   }
 
@@ -58,6 +65,8 @@
     module.status.x += x;
     module.status.y += y;
     module.progress += 1;
+
+    this.showHP();
 
     if (module.status.x < 1 || module.status.y < 1) {
         util.insertText('壁にぶつかりました');
@@ -78,8 +87,7 @@
     this.checkGoal();
     this.checkZombie();
     // If progress reachs 10, it ends.
-    if (module.progress >= 10) {
-      alert('あなたの負けだ・・・');
+    if (module.progress >= MAX_PROGRESS) {
       window.location.href = "losing.html"
       return;
     }
@@ -91,7 +99,6 @@
       var isMeetZombie = (this.status.x === zombies[i][0]
                           && this.status.y === zombies[i][1]);
       if (isMeetZombie) {
-        alert('ゾンビに襲われました！！！！');
         window.location.href = "zombie.html"
         return;
       }
@@ -105,6 +112,10 @@
       window.location.href = "heaven.html"
       return;
     }
+  }
+
+  module.showHP = function () {
+    $hp.innerText = MAX_PROGRESS - this.progress;
   }
 
 
@@ -132,7 +143,6 @@
          module.changeStatus(0, 1, '右に曲がりました...');
       }
   }
-
 
   module.init();
 
