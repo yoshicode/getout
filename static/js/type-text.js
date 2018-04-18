@@ -1,4 +1,10 @@
 $(function(){
+
+	var audio = new Audio('static/sounds/typewriter.mp3');
+	setTimeout(function () {
+		audio.play();
+	}, 2000)
+
 	var setElm = $('.split'),
 	delaySpeed = 200,
 	fadeSpeed = 0;
@@ -22,6 +28,7 @@ $(function(){
 		setTimeout(function(){
 				setElm.html(setText);
 				document.getElementById('nextBtn').style.visibility = "visible";
+				audio.pause();
 		},splitLength*delaySpeed+fadeSpeed);
 	});
 });

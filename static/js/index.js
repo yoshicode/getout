@@ -80,7 +80,7 @@
     // If progress reachs 10, it ends.
     if (module.progress >= 10) {
       alert('あなたの負けだ・・・');
-      window.location.href = ""
+      window.location.href = "losing.html"
       return;
     }
   }
@@ -102,8 +102,7 @@
     var isGoal = (this.status.x === this.goal.x
                   && this.status.y === this.goal.y);
     if (isGoal) {
-      alert('抜け穴を見つけた・・・！！！');
-
+      window.location.href = "heaven.html"
       return;
     }
   }
