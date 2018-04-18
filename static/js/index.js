@@ -5,6 +5,7 @@
   // Util function
   var $s = document.getElementById('status');
   var $hp = document.getElementById('hp');
+  var $z = document.getElementById('zombie');
 
   var util = {
 
@@ -18,8 +19,8 @@
     },
 
     // Return random number depends n
-    rand: function (n) {
-      return Math.floor(Math.random() * n) + 1;
+    rand: function (min, max) {
+      return Math.floor(Math.random() * (max - min) + min) + 1;
     },
 
     // init hp to show first
@@ -29,8 +30,7 @@
 
       if (x_length < 0) {x_length *= -1}
       if (y_length < 0) {y_length *= -1}
-
-      return x_length + y_length + 10;
+      return x_length + y_length + this.rand(5, 15);
     },
 
     // method to print to html
@@ -42,14 +42,18 @@
     culcDistance: function () {
       var remain = MAX_PROGRESS - module.progress;
 
-      if (module.mode == "easy" || module.mode == "hard" && remain < 5) {
+      var x = GOAL_X - module.status.x;
+      var y = GOAL_Y - module.status.y;
+      var hardModeHintNum = x + y + 3;
+
+      if (module.mode == "easy" || module.mode == "hard" && remain < hardModeHintNum) {
         var x = GOAL_X - module.status.x;
         var y = GOAL_Y - module.status.y;
 
         var distance = Math.round(Math.sqrt(x * x + y * y));
         console.log("distance: ", distance);
 
-        var t = "出口までの距離は" + distance + "のようだ。"
+        var t = "出口までの直線距離は" + distance + "のようだ。"
 
         this.insertText(t);
       }
@@ -85,16 +89,12 @@
   // Set default values
   {
     var PROGRESS = 0,
-    POSITION_X = util.rand(10),
-    POSITION_Y = util.rand(10),
-    GOAL_X = util.rand(10),
-    GOAL_Y = util.rand(10),
+    POSITION_X = util.rand(0, 10),
+    POSITION_Y = util.rand(0, 10),
+    GOAL_X = util.rand(0, 10),
+    GOAL_Y = util.rand(0, 10),
     MAX_PROGRESS = util.culcHP(),
-    ZOMBIES = [[util.rand(10), util.rand(10)],
-              [util.rand(10), util.rand(10)],
-              [util.rand(10), util.rand(10)],
-              [util.rand(10), util.rand(10)],
-              [util.rand(10), util.rand(10)],]
+    ZOMBIES = []
   }
 
   var module = {
@@ -105,12 +105,11 @@
     },
     progress: PROGRESS,
     zombies: ZOMBIES,
-    mode: "easy",
+    mode: "easy",  // Default easy
 
     init: function () {
       console.log("status: ", module.status);
       console.log("goal:", GOAL_X, ",", GOAL_Y);
-      console.log("ZOMBIES: ", module.zombies);
 
       util.checkMode();
 
@@ -121,10 +120,24 @@
         location.reload();
       }
 
+      this.zombie();
+
       // Init hit point
       this.showHP();
-
     }
+  }
+
+  module.zombie = function () {
+
+    // If mode is easy, zombie appeaer max 10, if not max is 15.
+    var NUM_ZOMBIE = module.mode === "easy" ? util.rand(3, 10) : util.rand(5, 15);
+    console.log("NUM_ZOMBIE: ", NUM_ZOMBIE);
+    $z.innerText = NUM_ZOMBIE;
+
+    for (var i=0; i < NUM_ZOMBIE; i++) {
+      ZOMBIES.push([util.rand(0, 10), util.rand(0, 10)]);
+    }
+
   }
 
   module.changeStatus = function (x, y, t) {

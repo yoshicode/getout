@@ -29,6 +29,7 @@ $(function(){
 				setElm.html(setText);
 				document.getElementsByClassName('nextBtn')[0].style.visibility = "visible";
 				document.getElementsByClassName('nextBtn')[1].style.visibility = "visible";
+				document.getElementsByClassName('intro')[0].style.visibility = "visible";
 				audio.pause();
 		},splitLength*delaySpeed+fadeSpeed);
 	});
