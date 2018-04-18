@@ -46,7 +46,8 @@
       var y = GOAL_Y - module.status.y;
       var hardModeHintNum = x + y + 3;
 
-      if (module.mode == "easy" || module.mode == "hard" && remain < hardModeHintNum) {
+      if (module.mode == "easy" || module.mode == "hard" && remain < hardModeHintNum
+          || module.mode == "hard" && hardModeHintNum < 7) {
         var x = GOAL_X - module.status.x;
         var y = GOAL_Y - module.status.y;
 
@@ -143,12 +144,9 @@
   module.changeStatus = function (x, y, t) {
     this.status.x += x;
     this.status.y += y;
-    this.progress += 1;
-
-    this.showHP();
 
     var wallPosition = this.status.x < 1 || this.status.y < 1
-                        || this.status.x > 15 || this.status.y > 15;
+                        || this.status.x > 10 || this.status.y > 10;
 
     if (wallPosition) {
         util.insertText('壁にぶつかりました');
@@ -157,10 +155,15 @@
         return;
     }
 
+    this.progress += 1;
+
+    this.showHP();
+
     this.checkEvent();
 
     util.insertText("<br>");
     util.insertEvent(); // 早く逃げなければ、ゾンビに襲われてしまう...
+    this.nearZombie(); // ゾンビが隣にいるようだ。気をつけないと...
     util.culcDistance(); // 出口までの距離はnのようだ。
     util.insertText(t); // 戻りました...
     util.insertText("<p>"+ this.status.progress +"回目の移動</p>"); // 1回目の移動
@@ -179,6 +182,7 @@
       window.location.href = "losing.html"
       return;
     }
+
     this.status.progress += 1;
   }
 
@@ -205,6 +209,27 @@
 
   module.showHP = function () {
     $hp.innerText = MAX_PROGRESS - this.progress;
+  }
+
+  module.nearZombie = function () {
+
+    console.log("zombies: ", this.zombies);
+
+    for (var i = 0; i < this.zombies.length; i++) {
+      var zombie_x = this.zombies[i][0];
+      var zombie_y = this.zombies[i][1];
+
+      var distance_zombie_x = zombie_x - this.status.x;
+      var distance_zombie_y = zombie_y - this.status.y;
+
+      if (distance_zombie_x < 0) {distance_zombie_x *= -1} // 絶対値
+      if (distance_zombie_y < 0) {distance_zombie_y *= -1} // 絶対値
+
+      if ((distance_zombie_x < 1 && distance_zombie_y < 2) || (distance_zombie_x < 2 && distance_zombie_y < 1)) {
+        util.insertText('ゾンビが隣にいるようだ。気をつけないと...');
+      }
+
+    }
   }
 
 
