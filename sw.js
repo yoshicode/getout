@@ -1,27 +1,30 @@
-var CACHE_VERSION = 1;
-
-//  特定のバージョン管理されたキャッシュ名としてマップされたショートハンド識別子。
-var CURRENT_CACHES = {
-  font: 'font-cache-v' + CACHE_VERSION
-};
-
-self.addEventListener('activate', function(event) {
-  var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
-    return CURRENT_CACHES[key];
-  });
-
-  // アクティブ worker は、promise が正常に解決されるまでアクティブとして扱われない。
+this.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (expectedCacheNames.indexOf(cacheName) == -1) {
-            console.log('Deleting out of date cache:', cacheName);
-
-            return caches.delete(cacheName);
-          }
-        })
-      );
+    caches.open('v1').then(function(cache) {
+      return cache.addAll([
+        '/',
+        'static/fonts/kowai.otf',
+        'static/img/goal.jpeg',
+        'static/img/scare.jpeg',
+        'static/img/zombie.jpg',
+        'static/js/index.js',
+        'static/js/type-text.js',
+      ]);
     })
+  );
+});
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    // キャッシュの存在チェック
+    caches.match(event.request)
+      .then(function(response) {
+        console.log(response);
+        if (response) {
+          return response;
+        } else {
+          return fetch(event.request)
+        }
+      })
   );
 });
