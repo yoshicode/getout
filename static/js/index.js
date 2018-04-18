@@ -10,13 +10,11 @@
 
     checkMode: function () {
       var url = location.href;
-      console.log("url", url);
       var params = url.split("?")[1].split("=");
-      if (params[0] !== "mode"){return;}
+      if (params[0] !== "mode"){return}
 
       var mode = params[1];
       module.mode = mode;
-
     },
 
     // Return random number depends n
@@ -40,10 +38,10 @@
       $s.insertAdjacentHTML('afterbegin', '<p class="m-t-10">'+ t +'</p>');
     },
 
-    // culcration distance to goal from this position
+    // Culcration distance to goal from this position
     culcDistance: function () {
       var remain = MAX_PROGRESS - module.progress;
-      
+
       if (module.mode == "easy" || module.mode == "hard" && remain < 5) {
         var x = GOAL_X - module.status.x;
         var y = GOAL_Y - module.status.y;

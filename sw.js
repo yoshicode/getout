@@ -9,6 +9,11 @@ this.addEventListener('install', function(event) {
         'static/img/zombie.jpg',
         'static/js/index.js',
         'static/js/type-text.js',
+        'static/sounds/heaven.mp3',
+        'static/sounds/scream.mp3',
+        'static/sounds/typewriter.mp3',
+        'static/sounds/wind.mp3',
+        'static/sounds/zombie.mp3',
       ]);
     })
   );
@@ -19,7 +24,6 @@ self.addEventListener('fetch', function(event) {
     // キャッシュの存在チェック
     caches.match(event.request)
       .then(function(response) {
-        console.log(response);
         if (response) {
           return response;
         } else {
