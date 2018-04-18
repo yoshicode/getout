@@ -15,8 +15,7 @@
       if (params[0] !== "mode"){return;}
 
       var mode = params[1];
-
-      console.log("mode: ", mode);
+      module.mode = mode;
 
     },
 
@@ -43,15 +42,19 @@
 
     // culcration distance to goal from this position
     culcDistance: function () {
-      var x = GOAL_X - module.status.x;
-      var y = GOAL_Y - module.status.y;
+      var remain = MAX_PROGRESS - module.progress;
+      
+      if (module.mode == "easy" || module.mode == "hard" && remain < 5) {
+        var x = GOAL_X - module.status.x;
+        var y = GOAL_Y - module.status.y;
 
-      var distance = Math.round(Math.sqrt(x * x + y * y));
-      console.log("distance: ", distance);
+        var distance = Math.round(Math.sqrt(x * x + y * y));
+        console.log("distance: ", distance);
 
-      var t = "出口までの距離は" + distance + "のようだ。"
+        var t = "出口までの距離は" + distance + "のようだ。"
 
-      this.insertText(t);
+        this.insertText(t);
+      }
     },
 
     // insert event based on rest hit point
@@ -104,6 +107,7 @@
     },
     progress: PROGRESS,
     zombies: ZOMBIES,
+    mode: "easy",
 
     init: function () {
       console.log("status: ", module.status);
