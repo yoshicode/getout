@@ -27,7 +27,8 @@ $(function(){
 		});
 		setTimeout(function(){
 				setElm.html(setText);
-				document.getElementById('nextBtn').style.visibility = "visible";
+				document.getElementsByClassName('nextBtn')[0].style.visibility = "visible";
+				document.getElementsByClassName('nextBtn')[1].style.visibility = "visible";
 				audio.pause();
 		},splitLength*delaySpeed+fadeSpeed);
 	});

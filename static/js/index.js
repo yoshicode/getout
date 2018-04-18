@@ -8,6 +8,18 @@
 
   var util = {
 
+    checkMode: function () {
+      var url = location.href;
+      console.log("url", url);
+      var params = url.split("?")[1].split("=");
+      if (params[0] !== "mode"){return;}
+
+      var mode = params[1];
+
+      console.log("mode: ", mode);
+
+    },
+
     // Return random number depends n
     rand: function (n) {
       return Math.floor(Math.random() * n) + 1;
@@ -97,6 +109,8 @@
       console.log("status: ", module.status);
       console.log("goal:", GOAL_X, ",", GOAL_Y);
       console.log("ZOMBIES: ", module.zombies);
+
+      util.checkMode();
 
       var isStatusAndGoalSame = (module.status.x === GOAL_X
                                 && module.status.y === GOAL_Y)
